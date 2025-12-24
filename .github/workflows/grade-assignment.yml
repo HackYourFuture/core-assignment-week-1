@@ -1,7 +1,7 @@
 name: Grade Assignment
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
 
@@ -10,15 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      issues: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "lts/*"
 
       - name: Run tests
         working-directory: .hyf
@@ -51,12 +54,16 @@ jobs:
             const pass = '${{ steps.score.outputs.pass }}' === 'true';
             const passingScore = '${{ steps.score.outputs.passing_score }}';
             const status = pass ? '✅ Passed' : '❌ Failed';
-
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## Assignment Grade ${status}\n\n**Score:** ${score}/${passingScore}\n\n<details>\n<summary>Test Details</summary>\n\n\`\`\`\n${output}\n\`\`\`\n\n</details>`
+              body: `## Assignment score ${score} / 100\n\n
+                **Score:** ${score}/${passingScore}\n\n
+                <details>\n
+                  <summary>Test Details</summary>\n\n
+                  \`\`\`\n${output}\n\`\`\`\n\n
+                </details>`
             });
 
       - name: Fail if tests failed
