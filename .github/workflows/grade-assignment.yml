@@ -42,7 +42,6 @@ jobs:
             const output = `${{ steps.output.outputs.results }}`;
             const exitCode = '${{ steps.test.outputs.exit_code }}';
             const status = exitCode === '0' ? '✅ Passed' : '❌ Failed';
-
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
