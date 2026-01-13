@@ -36,10 +36,11 @@ module.exports = async function run({ github, context, core }) {
   const status = pass ? `${icon} Passed` : `${icon} Failed`;
 
   // Clean, well-formatted markdown body (no stray indentation or spacing)
-  const body = `## Assignment Score: ${score} / ${passingScore} ${icon}
+  const body = `## 📝 HackYourFuture auto-feedback
+  ### Assignment Score: ${score} / ${passingScore} ${icon}
 **Status:** ${status}
 **Minimum score to pass:** ${passingScore}
-
+*🧪 The auto-feedback is experimental and still being improved*
 <details>
 <summary>Test Details</summary>
 
@@ -49,6 +50,9 @@ ${output.trimEnd()}
 
 </details>`;
 
+  // Minimize previous bot comments before posting a new one
+  await hidePreviousComments(github, owner, repo, issue_number);
+
   // Post the new comment
   await github.rest.issues.createComment({
     owner,
@@ -56,8 +60,6 @@ ${output.trimEnd()}
     issue_number,
     body
   });
-
-  await hidePreviousComments(github, owner, repo, issue_number);
 };
 
 
