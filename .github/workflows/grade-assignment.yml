@@ -7,4 +7,7 @@ on:
 
 jobs:
   grade:
+    permissions:
+      issues: write
+      pull-requests: write
     uses: HackYourFuture/github-actions/.github/workflows/auto-grade.yml@main
