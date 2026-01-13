@@ -23,9 +23,6 @@ module.exports = async function run({ github, context, core }) {
   const repo = context.repo.repo;
   const issue_number = context.issue.number;
 
-  // Read score and test output directly from files to avoid YAML/escape issues
-
-
   let testResults = null;
   try {
     testResults = getTestResults();
@@ -34,6 +31,7 @@ module.exports = async function run({ github, context, core }) {
     return;
   }
 
+  const { score, passingScore, pass, output } = testResults;
   const icon = pass ? '✅' : '❌';
   const status = pass ? `${icon} Passed` : `${icon} Failed`;
 

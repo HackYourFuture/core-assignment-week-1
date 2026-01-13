@@ -25,6 +25,13 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - name: Verify Node.js installation
+        run: |
+          which node
+          node --version
+          echo "PWD: $PWD"
+          ls -la .hyf/
+
       - name: Run tests script
         working-directory: .hyf
         # test.sh must output a results file at .hyf/score.json
