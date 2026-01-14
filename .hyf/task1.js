@@ -6,6 +6,8 @@ const execPromise = promisify(exec);
 
 const setup = async () => {
   await fs.rm('project', { recursive: true, force: true });
+  await execPromise('git config --global user.name "Tester"');
+  await execPromise('git config --global user.email "tester@example.com"');
 }
 
 const checkPath = async (filePath, shouldExist) => {

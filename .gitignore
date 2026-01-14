@@ -5,6 +5,8 @@ Thumbs.db
 
 # hyf
 .hyf/score.json
+.hyf/project
+task-1/project
 
 # Editor and IDE settings
 .vscode/
