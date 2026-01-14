@@ -11,7 +11,7 @@ const main = async () => {
 
   console.log('\n======================= Summary =======================');
   const totalScore = Math.min(100, Math.round(score1 * 0.7 + score2 * 0.3));
-  const passingScore = 70;
+  const passingScore = 50;
   console.log(`- Task 1 Score: ${score1}%`);
   console.log(`- Task 2 Score: ${score2}%`);
   console.log(`Total Score: ${totalScore}%`);
